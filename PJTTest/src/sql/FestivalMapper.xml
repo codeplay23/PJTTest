@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="FestivalMapper">
+
+	<resultMap id="festivalSelectMap" type="festival">
+		<result property="festivalName" column="festivalName" jdbcType="VARCHAR" />
+		<result property="webSite" column="webSite" jdbcType="VARCHAR" />
+		<result property="location" column="location" jdbcType="VARCHAR" />
+		<result property="startDate" column="startDate" jdbcType="VARCHAR" />
+		<result property="endDate" column="endDate" jdbcType="VARCHAR" />
+		<result property="contents" column="contents" jdbcType="VARCHAR" />
+		<result property="region" column="region" jdbcType="VARCHAR" />
+		<result property="detailRegion" column="detailRegion" jdbcType="VARCHAR" />
+		<result property="sponser" column="sponser" jdbcType="VARCHAR" />
+		<result property="phone" column="phone" jdbcType="INTEGER" />
+		<result property="relations" column="relations" jdbcType="VARCHAR" />
+		<result property="dorojuso" column="dorojuso" jdbcType="VARCHAR" />
+		<result property="jibunjuso" column="jibunjuso" jdbcType="VARCHAR" />
+		<result property="longitude" column="longitude" jdbcType="VARCHAR" />
+		<result property="latitude" column="latitude" jdbcType="VARCHAR" />
+</resultMap>
+
+	<select id="getFestival" resultMap="festivalSelectMap" >
+		SELECT * FROM festivals
+	</select>
+	
+	<insert id="addFestival" parameterType="festival" >
+		INSERT INTO festivals (
+		
+		FESTIVALNAME,
+		WEBSITE, 
+		LOCATION,
+		STARTDATE,
+		ENDDATE,
+		CONTENTS,
+		REGION,
+		DETAILREGION,
+		SPONSER,
+		PHONE,
+		RELATIONS,
+		DOROJUSO,
+		JIBUNJUSO,
+		LONGITUDE,
+		LATITUDE
+		)
+		
+		VALUES (
+		
+		#{festivalName:VARCHAR},
+		#{webSite:VARCHAR},
+		#{location:VARCHAR},
+		#{startDate:VARCHAR},
+		#{endDate:VARCHAR},
+		#{contents:VARCHAR},
+		#{region:VARCHAR},
+		#{detailRegion:VARCHAR},
+		#{sponser:VARCHAR},
+		#{phone:VARCHAR},
+		#{relations:VARCHAR},
+		#{dorojuso:VARCHAR},
+		#{jibunjuso:VARCHAR},
+		#{longitude:VARCHAR},
+		#{latitude:VARCHAR}
+		
+		)
+	</insert>
+	
+		<select  id="getFestivalList"  parameterType="search"	resultMap="festivalSelectMap">
+
+	 SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT *
+	  										 FROM FESTIVALS
+										
+											 ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+		
+		<!-- SELECT * FROM FESTIVALS -->
+
+	 </select>
+	
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT *
+						FROM FESTIVALS
+						 ) countTable;		
+	 </select>
+	
+	 
+</mapper>	
+			
+		
