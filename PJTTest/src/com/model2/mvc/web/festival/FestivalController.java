@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.model2.mvc.service.domain.Festival;
 import com.model2.mvc.service.festival.FestivalService;
 
-
+//test github
 @Controller
 @RequestMapping("/festival/*")
 public class FestivalController {
